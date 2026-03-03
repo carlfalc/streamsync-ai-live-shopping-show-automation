@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamSync AI - Live Shopping Show Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #0a0a0a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #6B46FF;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #6B46FF;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #6B46FF, #FF6B6B);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2a 100%);
+            padding: 120px 0 60px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #6B46FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: #ccc;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #6B46FF, #FF6B6B);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 40px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(107, 70, 255, 0.4);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FF6B6B;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: #111;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #333;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(107, 70, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .feature-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: #0a0a0a;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #6B46FF, #FF6B6B);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .step p {
+            color: #ccc;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 100px 0;
+            background: #111;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            border: 2px solid #333;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: #6B46FF;
+        }
+
+        .pricing-card.popular {
+            border-color: #FF6B6B;
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FF6B6B;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #6B46FF;
+            margin-bottom: 20px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .plan-features li {
+            color: #ccc;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            color: #FF6B6B;
+            position: absolute;
+            left: 0;
+        }
+
+        .plan-cta {
+            width: 100%;
+            background: linear-gradient(135deg, #6B46FF, #FF6B6B);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .plan-cta:hover {
+            opacity: 0.9;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: #0a0a0a;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .testimonial {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+
+        .testimonial-text {
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6B46FF, #FF6B6B);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 100px 0;
+            background: #111;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            background: #1a1a1a;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 20px;
+            text-align: left;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 20px 20px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 60px 0 30px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #888;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #6B46FF;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+
+        /* Email Signup */
+        .email-signup {
+            display: flex;
+            max-width: 400px;
+            margin: 20px auto;
+            gap: 10px;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .email-submit {
+            background: linear-gradient(135deg, #6B46FF, #FF6B6B);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .pricing-card.popular {
+                transform: none;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo">StreamSync AI</a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+                <a href="#pricing" class="nav-cta">Start Free Trial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Launch Professional Live Shopping Shows in Minutes</h1>
+            <p class="subtitle">AI-powered hosts, real-time engagement, and automated product demos that convert browsers into buyers 24/7</p>
+            <a href="#pricing" class="hero-cta">Start Your Free Trial</a>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">80%</div>
+                    <div class="stat-label">Reduced Staffing Costs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Automated Shows</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$35B</div>
+                    <div class="stat-label">Live Commerce Market</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Everything You Need for Live Commerce Success</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Hosts</h3>
+                    <p>Professional AI presenters that learn your brand voice, answer questions in real-time, and create purchase urgency across multiple languages.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Dynamic Pricing Engine</h3>
+                    <p>Automatically adjust prices based on viewer engagement, inventory levels, and real-time demand to maximize conversions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multi-Platform Streaming</h3>
+                    <p>Simultaneously broadcast to TikTok Shop, Instagram Live, YouTube Shopping, and your website from one dashboard.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Analytics</h3>
+                    <p>Track viewer engagement, conversion rates, and revenue metrics to optimize your live shopping performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How StreamSync AI Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Upload Products</h3>
+                    <p>Connect your store and upload product catalogs with descriptions, images, and pricing.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Customize AI Host</h3>
+                    <p>Train your AI presenter with your brand voice, style, and product knowledge.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Schedule Shows</h3>
+                    <p>Set up automated live streams across platforms or trigger shows based on traffic spikes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Watch Sales Grow</h3>
+                    <p>Monitor real-time performance as your AI host converts viewers into customers 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="plan-name">Starter</h3>
+                    <div class="plan-price">$97<span style="font-size: 1rem; color: #ccc;">/mo</span></div>
+                    <ul class="plan-features">
+                        <li>5 live shows per month</li>
+                        <li>AI host included</li>
+                        <li>1 platform integration</li>
+                        <li>Basic analytics</li>
+                        <li>Email support</li>
+                    </ul>
+                    <button class="plan-cta">Start Free Trial</button>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 class="plan-name">Growth</h3>
+                    <div class="plan-price">$297<span style="font-size: 1rem; color: #ccc;">/mo</span></div>
+                    <ul class="plan-features">
+                        <li>25 shows per month</li>
+                        <li>Multi-platform streaming</li>
+                        <li>Custom AI host training</li>
+                        <li>Dynamic pricing engine</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="plan-cta">Start Free Trial</button>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="plan-name">Pro</h3>
+                    <div class="plan-price">$597<span style="font-size: 1rem; color: #ccc;">/mo</span></div>
+                    <ul class="plan-features">
+                        <li>Unlimited shows</li>
+                        <li>White-label solution</li>
+                        <li>Advanced analytics</li>
+                        <li>API access</li>
+                        <li>Dedicated success manager</li>
+                    </ul>
+                    <button class="plan-cta">Start Free Trial</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">"StreamSync AI increased our live commerce revenue by 300% in the first month. The AI host feels so natural, our customers can't tell the difference!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah Martinez</h4>
+                            <p>CMO, Beauty Brands Co.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"We went from struggling with manual live streams to running 24/7 automated shows across 5 platforms. Game changer for our agency."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JC</div>
+                        <div class="author-info">
+                            <h4>James Chen</h4>
+                            <p>Digital Marketing Agency Owner</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"The dynamic pricing feature alone paid for itself in the first week. Our conversion rates are through the roof!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Maria Rodriguez</h4>
+                            <p>E-commerce Manager, Fashion Forward</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How realistic are the AI hosts?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Our AI hosts are trained on thousands of successful live shopping sessions and can engage viewers naturally, answer product questions, and create authentic purchase urgency. Most viewers can't distinguish them from human hosts.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Which platforms do you support?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        We currently support TikTok Shop, Instagram Live, YouTube Shopping, Facebook Live, and custom website embedding. We're constantly adding new platforms based on customer demand.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can I customize the AI host's appearance and voice?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes! You can customize your AI host's appearance, voice, speaking style, and brand personality. Our Growth and Pro plans include advanced customization options to match your brand perfectly.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do you integrate with my existing e-commerce platform?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        We integrate with Shopify, WooCommerce, BigCommerce, Magento, and most major e-commerce platforms. Setup takes just minutes with our one-click integrations.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>StreamSync AI</h3>
+                    <p>Revolutionizing live commerce with AI-powered automation. Join thousands of brands scaling their live shopping success.</p>
+                    <div class="email-signup">
+                        <input type="email" class="email-input" placeholder="Enter your email">
+                        <button class="email-submit">Subscribe</button>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <p><a href="#">Features</a></p>
+                    <p><a href="#">Pricing</a></p>
+                    <p><a href="#">API Documentation</a></p>
+                    <p><a href="#">Integrations</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <p><a href="#">About Us</a></p>
+                    <p><a href="#">Blog</a></p>
+                    <p><a href="#">Careers</a></p>
+                    <p><a href="#">Contact</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <p><a href="#">Help Center</a></p>
+                    <p><a href="#">Live Chat</a></p>
+                    <p><a href="#">Status Page</a></p>
+                    <p><a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 StreamSync AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
