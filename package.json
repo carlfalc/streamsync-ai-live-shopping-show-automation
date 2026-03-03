@@ -1,0 +1,16 @@
+{
+  "name": "streamsync-ai-live-shopping-show-automation",
+  "version": "0.1.0",
+  "description": "StreamSync AI automates live shopping shows for e-commerce brands by providing AI hosts, real-time viewer engagement, dynamic pricing, and automated product demonstrations. As live commerce explodes g",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "ai",
+    "saas",
+    "the-firm"
+  ],
+  "author": "The Firm — AI Venture Studio",
+  "license": "MIT"
+}
